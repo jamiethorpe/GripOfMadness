@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://1od3b83xtvha"]
+
+[ext_resource type="Script" path="res://scripts/Enemy.cs" id="1_37aog"]
+[ext_resource type="Texture2D" uid="uid://c1plhvulwaa01" path="res://assets/sprites/Skeleton/Medieval_PB_Skeleton_idle1.png" id="1_mdssx"]
+[ext_resource type="PackedScene" uid="uid://bthgy4qglf7ap" path="res://scenes/health_component.tscn" id="3_aynvv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6m6mw"]
+height = 70.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24i4b"]
+atlas = ExtResource("1_mdssx")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnacv"]
+atlas = ExtResource("1_mdssx")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scr1t"]
+atlas = ExtResource("1_mdssx")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jajkh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24i4b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnacv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scr1t")
+}],
+"loop": true,
+"name": &"idle_south",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_37aog")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 5)
+shape = SubResource("CapsuleShape2D_6m6mw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jajkh")
+animation = &"idle_south"
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_aynvv")]

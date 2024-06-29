@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2wo3ks1k87hx"]
+
+[ext_resource type="Script" path="res://scripts/HitboxComponent.cs" id="1_v7l16"]
+
+[node name="HitboxComponent" type="Area2D"]
+position = Vector2(1, 0)
+script = ExtResource("1_v7l16")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
