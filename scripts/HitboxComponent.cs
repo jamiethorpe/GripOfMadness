@@ -7,10 +7,16 @@ public partial class HitboxComponent : Area2D
     [Signal]
     public delegate void EnemyClickedEventHandler(HitboxComponent hitbox);
 
-    [Export] public HealthComponent HealthComponent;
+    public Enemy Enemy;
 
+    [Export] public HealthComponent HealthComponent;
     [Export] public bool IsAttackable = true;
     [Export] public string test = "yes";
+
+    public override void _Ready()
+    {
+        Enemy = GetParent<Enemy>();
+    }
 
     public void Damage(AttackComponent attack)
     {
@@ -23,10 +29,8 @@ public partial class HitboxComponent : Area2D
     {
         if (@event is InputEventMouseButton mouseButton && mouseButton.Pressed && IsAttackable)
         {
-            GD.Print("You clicked me!");
-            GD.Print("Emitting signal from instance with Test: " + test);
+            GD.Print("Clicked me!");
             EmitSignal(nameof(EnemyClicked), this);
-            GD.Print("Signal emitted.");
         }
     }
 }

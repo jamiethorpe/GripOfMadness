@@ -18,7 +18,7 @@ public partial class EnemyManager : Node
     public void SpawnEnemy()
     {
         // var enemyScene = (PackedScene)ResourceLoader.Load("res://scenes/enemy.tscn");
-        var enemy = GetNode<Enemy>("Enemy");
+        var enemy = GetNode<Enemy>("Skeleton/Enemy");
         // var hitbox = (HitboxComponent)enemy.GetNode("HitboxComponent");
         // AddChild(enemy);
         // _enemyHitboxes.Add(hitbox);

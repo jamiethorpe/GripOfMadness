@@ -26,53 +26,31 @@ public partial class Player : CharacterBody2D
 		// Connect to already existing enemies if any
 		// Connect to already existing enemies if any
 		foreach (var child in enemyManager.GetChildren())
-			if (child is Enemy enemy)
+		{
+			var enemy = child.GetNode<Enemy>("Enemy");
+			
+			if (enemy is not null)
+			{
 				OnEnemySpawned(enemy);
+			}
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		if (Input.IsActionJustPressed("right_click"))
 			HandleAttack();
-		// else if (Input.IsActionPressed("left_click"))
-		// {
-		// 	// Check for an Area2D at the mouse position
-		// 	var query = new PhysicsPointQueryParameters2D
-		// 	{
-		// 		Position = GetViewport().GetMousePosition(),
-		// 		CollideWithAreas = true
-		// 	};
-		//
-		// 	var objectsUnderClick = GetWorld2D().DirectSpaceState.IntersectPoint(query);
-		// 	GD.Print(objectsUnderClick);
-		// 	foreach (var target in objectsUnderClick)
-		// 	{
-		// 		if (target is Area2D)
-		// 		{
-		// 			Console.WriteLine('Found target: ' + target);;
-		// 		}
-		// 	}
-		// }
 		else if (!_isAttacking) HandleMovement();
 	}
 
 	private void OnEnemySpawned(Enemy enemy)
 	{
-		GD.Print("Enemy spawn event triggered in Player");
-		// Connect the new enemy's signal
 		var hitbox = enemy.GetNode<HitboxComponent>("HitboxComponent");
-		GD.Print($"Connecting signal for HitboxComponent with Test value: {hitbox.test}");
 		hitbox.Connect(HitboxComponent.SignalName.EnemyClicked, new Callable(this, nameof(OnEnemyClicked)));
-		if (hitbox.IsConnected(HitboxComponent.SignalName.EnemyClicked, new Callable(this, nameof(OnEnemyClicked))))
-			GD.Print($"Signal 'EnemyClicked' connected to {hitbox.test} successfully.");
-		else
-			GD.Print("Failed to connect signal 'EnemyClicked'.");
-		// enemy.TreeExiting += () => OnEnemyExited(enemy);
 	}
 
 	private void OnEnemyExited(Enemy enemy)
 	{
-		GD.Print("Enemy exited event triggered in Player");
 		// Explicitly disconnect signals if needed (usually not necessary since QueueFree handles it)
 		enemy.GetNode<HitboxComponent>("HitboxComponent")
 			.Disconnect(HitboxComponent.SignalName.EnemyClicked, new Callable(this, nameof(OnEnemyClicked)));
@@ -80,8 +58,7 @@ public partial class Player : CharacterBody2D
 
 	private void OnEnemyClicked(HitboxComponent hitbox)
 	{
-		GD.Print("yep");
-		GD.Print($"Enemy clicked: {hitbox.Name}");
+		GD.Print($"Enemy clicked: {hitbox.Enemy.DisplayName}");
 		// Handle the enemy being clicked, e.g., start an attack
 	}
 
@@ -106,7 +83,7 @@ public partial class Player : CharacterBody2D
 
 		var directionVector = _movementPosition - Position;
 		var angle = Mathf.Atan2(directionVector.Y, directionVector.X);
-
+		
 		if (Position.DistanceSquaredTo(_movementPosition) > 10)
 		{
 			var targetPosition = directionVector.Normalized();
