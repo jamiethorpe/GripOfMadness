@@ -29,7 +29,6 @@ public partial class HitboxComponent : Area2D
     {
         if (@event is InputEventMouseButton mouseButton && mouseButton.Pressed && IsAttackable)
         {
-            GD.Print("Clicked me!");
             EmitSignal(nameof(EnemyClicked), this);
         }
     }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bn436xa7v2moh"]
+[gd_scene load_steps=32 format=3 uid="uid://bn436xa7v2moh"]
 
 [ext_resource type="Texture2D" uid="uid://b83wsxmc44v70" path="res://assets/sprites/ground/dirt_128x64.png" id="1_1f7rp"]
 [ext_resource type="Texture2D" uid="uid://b7bd38rjycsag" path="res://assets/sprites/ground/grass_green_128x64.png" id="2_5ij1l"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ctk610ccteha6" path="res://assets/sprites/ground/sand_128x64.png" id="6_fvia2"]
 [ext_resource type="Texture2D" uid="uid://djjkagdmu5wms" path="res://assets/sprites/ground/stone_path_128x64.png" id="7_56wtu"]
 [ext_resource type="Texture2D" uid="uid://5jmkhimgvj0x" path="res://assets/sprites/Outside_1.png" id="8_qwf05"]
+[ext_resource type="Script" path="res://scripts/Terrain.cs" id="9_t8hen"]
 [ext_resource type="PackedScene" uid="uid://dpweecpmykmu1" path="res://scenes/enemy_manager.tscn" id="10_rm5ho"]
 [ext_resource type="Texture2D" uid="uid://c1plhvulwaa01" path="res://assets/sprites/Skeleton/Medieval_PB_Skeleton_idle1.png" id="10_s3ljf"]
 [ext_resource type="PackedScene" uid="uid://1od3b83xtvha" path="res://scenes/enemy.tscn" id="10_xrqeo"]
@@ -566,7 +567,7 @@ height = 1130.0
 
 [node name="Game" type="Node"]
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="Terrain" type="TileMap" parent="."]
 y_sort_enabled = true
 tile_set = SubResource("TileSet_2byna")
 format = 2
@@ -581,6 +582,7 @@ layer_1/tile_data = PackedInt32Array(-196615, 131078, 0, -131079, 131078, 0, -65
 layer_2/name = "Top"
 layer_2/y_sort_enabled = true
 layer_2/tile_data = PackedInt32Array(327680, 393223, 10, 524286, 1376263, 15, 65536, 1376263, 15, 393208, 1179655, 12, -327688, 786439, 9, -524289, 1376263, 15, 589823, 1376263, 0, 720889, 1376263, 0, -589821, 1376263, 0, 327685, 589831, 32, 131062, 589831, 32, -393220, 1179655, 42, -458756, 1179655, 31, -458755, 1179655, 37, -262138, 1179655, 24, -196602, 1179655, 31, 1310718, 1179655, 42, 1245183, 1179655, 24, 1179646, 1179655, 24, 1114111, 1179655, 42, 1245182, 1179655, 0, 1376254, 1179655, 0, 1310717, 589831, 15, 1179647, 393223, 15, -4, 196615, 6)
+script = ExtResource("9_t8hen")
 
 [node name="EnemyManager" parent="." instance=ExtResource("10_rm5ho")]
 
@@ -607,6 +609,9 @@ shape = SubResource("RectangleShape2D_1masc")
 [node name="Player" parent="." instance=ExtResource("2_dxfcn")]
 position = Vector2(-134, -34)
 
+[node name="AttackComponent" parent="Player" index="2"]
+Range = 90.0
+
 [node name="Camera2D" type="Camera2D" parent="Player"]
 scale = Vector2(1, 1.048)
 zoom = Vector2(1.2, 1.2)
@@ -614,6 +619,7 @@ position_smoothing_enabled = true
 
 [node name="AgroArea" type="Area2D" parent="Player"]
 position = Vector2(0, 1)
+input_pickable = false
 script = ExtResource("13_i7wwo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/AgroArea"]

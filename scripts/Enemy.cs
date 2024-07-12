@@ -9,6 +9,7 @@ public partial class Enemy : CharacterBody2D
 
     [Export] public string DisplayName = "Default Enemy";
     [Export] public HealthComponent HealthComponent;
+    public HitboxComponent HitboxComponent;
 
     public override void _Ready()
     {

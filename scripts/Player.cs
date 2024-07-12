@@ -7,9 +7,11 @@ public partial class Player : CharacterBody2D
 	private string _currentAnimation = "idle_south";
 	private bool _isAttacking;
 	private string _lastDirection = "south"; // Default direction
+	private Enemy _targetEnemy;
 
 	private Vector2 _movementPosition = Vector2.Zero;
 	private float _speed = 300.0f;
+	
 	[Export] public AnimatedSprite2D AnimatedSprite;
 	public AttackComponent AttackComponent;
 
@@ -34,13 +36,40 @@ public partial class Player : CharacterBody2D
 				OnEnemySpawned(enemy);
 			}
 		}
+		
+		var terrain = GetNode<Terrain>("/root/Game/Terrain");
+		terrain.Connect(Terrain.SignalName.TerrainClicked, new Callable(this, nameof(OnTerrainClicked)));
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		if (Input.IsActionJustPressed("right_click"))
+		{
 			HandleAttack();
-		else if (!_isAttacking) HandleMovement();
+		}
+		
+		if (_targetEnemy is not null && _isAttacking)
+		{
+			var enemyPosition = _targetEnemy.Position;
+			var distance = Position.DistanceTo(enemyPosition);
+
+			if (distance > AttackComponent.Range)
+			{
+				_movementPosition = _targetEnemy.Position - (Position - _targetEnemy.Position).Normalized() * AttackComponent.Range;
+				Move();
+			}
+			else
+			{
+				HandleAttack();
+			}
+
+			return;
+		}
+		
+		if (_movementPosition != Position)
+		{
+			Move();
+		}
 	}
 
 	private void OnEnemySpawned(Enemy enemy)
@@ -59,13 +88,23 @@ public partial class Player : CharacterBody2D
 	private void OnEnemyClicked(HitboxComponent hitbox)
 	{
 		GD.Print($"Enemy clicked: {hitbox.Enemy.DisplayName}");
-		// Handle the enemy being clicked, e.g., start an attack
+		
+		_isAttacking = true;
+		_targetEnemy = hitbox.Enemy;
+	}
+	
+	private void OnTerrainClicked(Vector2 position)
+	{
+		_isAttacking = false;
+		_targetEnemy = null;
+		_movementPosition = position;
 	}
 
 	private void HandleAttack()
 	{
-		var attackClickPosition = GetGlobalMousePosition();
-		var attackDirectionVector = attackClickPosition - Position;
+		Vector2 attackPosition = _targetEnemy?.Position ?? GetGlobalMousePosition();
+
+		var attackDirectionVector = attackPosition - Position;
 		var attackAngle = Mathf.Atan2(attackDirectionVector.Y, attackDirectionVector.X);
 		var attackDirection = GetDirection(attackAngle);
 		_lastDirection = attackDirection;
@@ -77,10 +116,8 @@ public partial class Player : CharacterBody2D
 		_movementPosition = Position; // Clear target position to stop running after attack
 	}
 
-	private void HandleMovement()
+	private void Move()
 	{
-		if (Input.IsActionPressed("left_click")) _movementPosition = GetGlobalMousePosition();
-
 		var directionVector = _movementPosition - Position;
 		var angle = Mathf.Atan2(directionVector.Y, directionVector.X);
 		
