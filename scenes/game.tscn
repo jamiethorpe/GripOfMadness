@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bn436xa7v2moh"]
+[gd_scene load_steps=37 format=3 uid="uid://bn436xa7v2moh"]
 
 [ext_resource type="Texture2D" uid="uid://b83wsxmc44v70" path="res://assets/sprites/ground/dirt_128x64.png" id="1_1f7rp"]
 [ext_resource type="Texture2D" uid="uid://b7bd38rjycsag" path="res://assets/sprites/ground/grass_green_128x64.png" id="2_5ij1l"]
@@ -13,7 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://dpweecpmykmu1" path="res://scenes/enemy_manager.tscn" id="10_rm5ho"]
 [ext_resource type="Texture2D" uid="uid://c1plhvulwaa01" path="res://assets/sprites/Skeleton/Medieval_PB_Skeleton_idle1.png" id="10_s3ljf"]
 [ext_resource type="PackedScene" uid="uid://1od3b83xtvha" path="res://scenes/enemy.tscn" id="10_xrqeo"]
+[ext_resource type="Texture2D" uid="uid://t201cq2w216o" path="res://assets/sprites/Skeleton/Medieval_PB_Skeleton_ko.png" id="11_rvukb"]
 [ext_resource type="PackedScene" uid="uid://c2wo3ks1k87hx" path="res://scenes/hitbox_component.tscn" id="11_tvhvw"]
+[ext_resource type="Script" path="res://scripts/Enemies/Skeleton.cs" id="12_w47ac"]
 [ext_resource type="Script" path="res://scripts/AgroArea.cs" id="13_i7wwo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8gpyc"]
@@ -526,6 +528,18 @@ sources/5 = SubResource("TileSetAtlasSource_fc8t2")
 sources/6 = SubResource("TileSetAtlasSource_08rdk")
 sources/7 = SubResource("TileSetAtlasSource_qqkcl")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwhcw"]
+atlas = ExtResource("11_rvukb")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q21qs"]
+atlas = ExtResource("11_rvukb")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0auue"]
+atlas = ExtResource("11_rvukb")
+region = Rect2(256, 0, 128, 128)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_uequt"]
 atlas = ExtResource("10_s3ljf")
 region = Rect2(0, 0, 128, 128)
@@ -542,6 +556,20 @@ region = Rect2(256, 0, 128, 128)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_kwhcw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q21qs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0auue")
+}],
+"loop": false,
+"name": &"die_south",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_uequt")
 }, {
 "duration": 1.0,
@@ -551,7 +579,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_lqshd")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle_south",
 "speed": 5.0
 }]
 
@@ -586,23 +614,25 @@ script = ExtResource("9_t8hen")
 
 [node name="EnemyManager" parent="." instance=ExtResource("10_rm5ho")]
 
-[node name="Skeleton" type="AnimatedSprite2D" parent="EnemyManager"]
-sprite_frames = SubResource("SpriteFrames_5ptx5")
-
-[node name="Enemy" parent="EnemyManager/Skeleton" instance=ExtResource("10_xrqeo")]
+[node name="Skeleton" parent="EnemyManager" instance=ExtResource("10_xrqeo")]
+script = ExtResource("12_w47ac")
 DisplayName = "Skeleton"
 
-[node name="HealthComponent" parent="EnemyManager/Skeleton/Enemy" index="0"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="EnemyManager/Skeleton"]
+sprite_frames = SubResource("SpriteFrames_5ptx5")
+animation = &"die_south"
+
+[node name="HealthComponent" parent="EnemyManager/Skeleton" index="1"]
 MaxHealth = 50
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyManager/Skeleton/Enemy"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyManager/Skeleton"]
 position = Vector2(0, 19)
 shape = SubResource("CapsuleShape2D_xtfav")
 
-[node name="HitboxComponent" parent="EnemyManager/Skeleton/Enemy" groups=["enemies"] instance=ExtResource("11_tvhvw")]
+[node name="HitboxComponent" parent="EnemyManager/Skeleton" groups=["enemies"] instance=ExtResource("11_tvhvw")]
 test = "no"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyManager/Skeleton/Enemy/HitboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyManager/Skeleton/HitboxComponent"]
 position = Vector2(-0.5, 5)
 shape = SubResource("RectangleShape2D_1masc")
 
@@ -610,6 +640,7 @@ shape = SubResource("RectangleShape2D_1masc")
 position = Vector2(-134, -34)
 
 [node name="AttackComponent" parent="Player" index="2"]
+AttackDamage = 10
 Range = 90.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -626,5 +657,5 @@ script = ExtResource("13_i7wwo")
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_2k2wr")
 
-[editable path="EnemyManager/Skeleton/Enemy"]
+[editable path="EnemyManager/Skeleton"]
 [editable path="Player"]

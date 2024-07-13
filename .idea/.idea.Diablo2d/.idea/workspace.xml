@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07cc04bb-16ad-4df5-b18e-cabca0d0aa5e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/aws.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Diablo2d.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GripOfMadness.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Diablo2d.sln" beforeDir="false" afterPath="$PROJECT_DIR$/GripOfMadness.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/project.godot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/game.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/game.tscn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/AttackComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/AttackComponent.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Enemy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/EnemyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/EnemyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/HealthComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/HealthComponent.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/HitboxComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/HitboxComponent.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Player.cs" afterDir="false" />
     </list>
@@ -55,7 +49,7 @@
   &quot;keyToString&quot;: {
     &quot;.NET Executable.Player.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;attack-damage&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -108,7 +102,7 @@
       <option name="presentableId" value="Default" />
       <updated>1720645769272</updated>
       <workItem from="1720645771750" duration="57000" />
-      <workItem from="1720645841475" duration="9371000" />
+      <workItem from="1720645841475" duration="19245000" />
     </task>
     <servers />
   </component>

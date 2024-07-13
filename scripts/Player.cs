@@ -1,11 +1,17 @@
+using Diablo2d.enums;
+using Diablo2d.Utils;
 using Godot;
 
 namespace Diablo2d.scripts;
 
 public partial class Player : CharacterBody2D
 {
-	private string _currentAnimation = "idle_south";
+	private string _currentAnimation = Animations.IdleSouth;
+	private PlayerAnimationType _currentAnimationType;
+	
 	private bool _isAttacking;
+	private AttackComponent _attackComponent;
+
 	private string _lastDirection = "south"; // Default direction
 	private Enemy _targetEnemy;
 
@@ -13,28 +19,27 @@ public partial class Player : CharacterBody2D
 	private float _speed = 300.0f;
 	
 	[Export] public AnimatedSprite2D AnimatedSprite;
-	public AttackComponent AttackComponent;
 
 	public override void _Ready()
 	{
 		AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		AttackComponent = GetNode<AttackComponent>("AttackComponent");
+		_attackComponent = GetNode<AttackComponent>("AttackComponent");
 		_movementPosition = Position;
 		AnimatedSprite.Connect("animation_finished", Callable.From(OnAnimationFinished));
 
 		// Get the EnemyManager and connect to the EnemySpawned signal
 		var enemyManager = GetNode<EnemyManager>("/root/Game/EnemyManager");
 		enemyManager.Connect(EnemyManager.SignalName.EnemySpawned, new Callable(this, nameof(OnEnemySpawned)));
-		// Connect to already existing enemies if any
+
 		// Connect to already existing enemies if any
 		foreach (var child in enemyManager.GetChildren())
 		{
-			var enemy = child.GetNode<Enemy>("Enemy");
-			
-			if (enemy is not null)
+			if (child is not Enemy enemy)
 			{
-				OnEnemySpawned(enemy);
+				return;
 			}
+			
+			OnEnemySpawned(enemy);
 		}
 		
 		var terrain = GetNode<Terrain>("/root/Game/Terrain");
@@ -53,9 +58,13 @@ public partial class Player : CharacterBody2D
 			var enemyPosition = _targetEnemy.Position;
 			var distance = Position.DistanceTo(enemyPosition);
 
-			if (distance > AttackComponent.Range)
+			if (distance > _attackComponent.Range)
 			{
-				_movementPosition = _targetEnemy.Position - (Position - _targetEnemy.Position).Normalized() * AttackComponent.Range;
+				_movementPosition = 
+					_targetEnemy.Position
+					- (Position - _targetEnemy.Position).Normalized()
+					* _attackComponent.Range;
+				
 				Move();
 			}
 			else
@@ -75,6 +84,7 @@ public partial class Player : CharacterBody2D
 	private void OnEnemySpawned(Enemy enemy)
 	{
 		var hitbox = enemy.GetNode<HitboxComponent>("HitboxComponent");
+		GD.Print("registering hitbox " + hitbox.Name);
 		hitbox.Connect(HitboxComponent.SignalName.EnemyClicked, new Callable(this, nameof(OnEnemyClicked)));
 	}
 
@@ -87,10 +97,9 @@ public partial class Player : CharacterBody2D
 
 	private void OnEnemyClicked(HitboxComponent hitbox)
 	{
-		GD.Print($"Enemy clicked: {hitbox.Enemy.DisplayName}");
-		
 		_isAttacking = true;
 		_targetEnemy = hitbox.Enemy;
+		GD.Print(_targetEnemy.DisplayName);
 	}
 	
 	private void OnTerrainClicked(Vector2 position)
@@ -102,6 +111,11 @@ public partial class Player : CharacterBody2D
 
 	private void HandleAttack()
 	{
+		if (_targetEnemy.IsDead())
+		{
+			return;
+		}
+		
 		Vector2 attackPosition = _targetEnemy?.Position ?? GetGlobalMousePosition();
 
 		var attackDirectionVector = attackPosition - Position;
@@ -149,7 +163,15 @@ public partial class Player : CharacterBody2D
 		if (_isAttacking)
 		{
 			_isAttacking = false;
-			AnimatedSprite.Play("idle_" + _lastDirection);
+
+			if (!_targetEnemy.IsDead())
+			{
+				_attackComponent.Attack(_targetEnemy.HealthComponent);
+			}
+			
+			_currentAnimation = "idle_" + _lastDirection;
+			_currentAnimationType = PlayerAnimationType.Idle;
+			AnimatedSprite.Play(_currentAnimation);
 		}
 	}
 
