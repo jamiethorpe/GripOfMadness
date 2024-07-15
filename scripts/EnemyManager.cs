@@ -17,16 +17,16 @@ public partial class EnemyManager : Node
 
     public void SpawnEnemy()
     {
-        // var enemyScene = (PackedScene)ResourceLoader.Load("res://scenes/enemy.tscn");
-        var enemy = GetNode<Enemy>("Skeleton/Enemy");
-        // var hitbox = (HitboxComponent)enemy.GetNode("HitboxComponent");
-        // AddChild(enemy);
-        // _enemyHitboxes.Add(hitbox);
-        _enemies.Add(enemy);
-
-        GD.Print("Enemy spawned!");
-
-        EmitSignal(SignalName.EnemySpawned, enemy);
+        foreach (var child in GetChildren())
+        {
+            if (child is not Enemy enemy)
+            {
+                return;
+            }
+            
+            _enemies.Add(enemy);
+            EmitSignal(SignalName.EnemySpawned, enemy);
+        }
     }
 
     public void RemoveEnemy(Enemy enemy)
