@@ -24,6 +24,7 @@ public partial class Enemy : CharacterBody2D, IKillable
         _animatedSprite.Play(_currentAnimation);
         GD.Print(_animatedSprite.IsClass("AnimatedSprite2D"));
         HealthComponent = GetNode<HealthComponent>("HealthComponent");
+        HitboxComponent = GetNode<HitboxComponent>("HitboxComponent");
     }
 
     public void Activate()
@@ -36,9 +37,10 @@ public partial class Enemy : CharacterBody2D, IKillable
         // play death animation
         _isDead = true;
         _animatedSprite.Play("die_" + _lastDirection);
-        GetNode<CollisionShape2D>("CollisionShape2D").QueueFree();
         HitboxComponent.QueueFree();
         HealthComponent.QueueFree();
+        GetNode<CollisionShape2D>("CollisionShape2D").QueueFree();
+
 
         // free the enemy from the queue and
         // remove it from the scene tree

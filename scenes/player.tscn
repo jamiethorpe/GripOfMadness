@@ -914,7 +914,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5ueo2"]
-height = 54.0
+height = 36.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_8qax1")
@@ -924,7 +924,7 @@ sprite_frames = SubResource("SpriteFrames_81jax")
 animation = &"idle_east"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 5)
+position = Vector2(0, 28)
 shape = SubResource("CapsuleShape2D_5ueo2")
 
 [node name="AttackComponent" type="Node2D" parent="."]

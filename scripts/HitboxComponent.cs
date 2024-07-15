@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace Diablo2d.scripts;
 
@@ -11,7 +11,6 @@ public partial class HitboxComponent : Area2D
 
     [Export] public HealthComponent HealthComponent;
     [Export] public bool IsAttackable = true;
-    [Export] public string test = "yes";
 
     public override void _Ready()
     {
@@ -29,8 +28,7 @@ public partial class HitboxComponent : Area2D
     {
         if (@event is InputEventMouseButton mouseButton && mouseButton.Pressed && IsAttackable)
         {
-            GD.Print("clicked");
-
+            GD.Print("Clicked me!");
             EmitSignal(nameof(EnemyClicked), this);
         }
     }
