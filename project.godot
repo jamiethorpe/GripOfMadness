@@ -15,6 +15,10 @@ run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/show_image=true
+
 [dotnet]
 
 project/assembly_name="GripOfMadness"

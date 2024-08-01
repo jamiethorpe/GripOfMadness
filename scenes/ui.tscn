@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://18njuhshadl2"]
+
+[ext_resource type="Script" path="res://scripts/TargetHealth.cs" id="1_q703b"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bemcu"]
+blend_mode = 4
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="TargetHealth" type="ProgressBar" parent="."]
+modulate = Color(1, 0, 0, 1)
+self_modulate = Color(1, 0, 0, 1)
+top_level = true
+material = SubResource("CanvasItemMaterial_bemcu")
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -232.0
+offset_top = 47.0
+offset_right = 168.0
+offset_bottom = 87.0
+grow_horizontal = 2
+value = 100.0
+show_percentage = false
+script = ExtResource("1_q703b")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -104.0
+offset_top = -424.0
+offset_right = -64.0
+offset_bottom = -384.0

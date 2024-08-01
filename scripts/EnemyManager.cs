@@ -9,6 +9,8 @@ public partial class EnemyManager : Node
     public delegate void EnemySpawnedEventHandler(HitboxComponent enemy);
 
     private readonly List<Enemy> _enemies = new();
+    [Export]
+    private ProgressBar _targetHealth;
 
     public override void _Ready()
     {

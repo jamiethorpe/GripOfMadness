@@ -12,13 +12,16 @@ public partial class Player : CharacterBody2D
 	private bool _isAttacking;
 	private AttackComponent _attackComponent;
 
-	private string _lastDirection = "south"; // Default direction
-	private Enemy _targetEnemy;
-
+	private string _lastDirection = Directions.South; // Default direction
 	private Vector2 _movementPosition = Vector2.Zero;
 	private float _speed = 300.0f;
 	
 	[Export] public AnimatedSprite2D AnimatedSprite;
+	
+	public Enemy TargetEnemy;
+	
+	[Export] public TargetHealth TargetHealth;
+	
 
 	public override void _Ready()
 	{
@@ -53,16 +56,16 @@ public partial class Player : CharacterBody2D
 			HandleAttack();
 		}
 		
-		if (_targetEnemy is not null && _isAttacking)
+		if (TargetEnemy is not null && _isAttacking)
 		{
-			var enemyPosition = _targetEnemy.Position;
+			var enemyPosition = TargetEnemy.Position;
 			var distance = Position.DistanceTo(enemyPosition);
 
 			if (distance > _attackComponent.Range)
 			{
 				_movementPosition = 
-					_targetEnemy.Position
-					- (Position - _targetEnemy.Position).Normalized()
+					TargetEnemy.Position
+					- (Position - TargetEnemy.Position).Normalized()
 					* _attackComponent.Range;
 				
 				Move();
@@ -84,8 +87,9 @@ public partial class Player : CharacterBody2D
 	private void OnEnemySpawned(Enemy enemy)
 	{
 		var hitbox = enemy.GetNode<HitboxComponent>("HitboxComponent");
-		GD.Print("registering hitbox " + hitbox.Name);
 		hitbox.Connect(HitboxComponent.SignalName.EnemyClicked, new Callable(this, nameof(OnEnemyClicked)));
+		hitbox.Connect(HitboxComponent.SignalName.EnemyHovered, new Callable(this, nameof(OnEnemyHovered)));
+		hitbox.Connect(HitboxComponent.SignalName.EnemyHoverRemoved, new Callable(this, nameof(OnEnemyHoverRemoved)));
 	}
 
 	private void OnEnemyExited(Enemy enemy)
@@ -98,25 +102,37 @@ public partial class Player : CharacterBody2D
 	private void OnEnemyClicked(HitboxComponent hitbox)
 	{
 		_isAttacking = true;
-		_targetEnemy = hitbox.Enemy;
-		GD.Print(_targetEnemy.DisplayName);
+		TargetEnemy = hitbox.Enemy;
+	}
+	
+	private void OnEnemyHovered(HitboxComponent hitbox)
+	{
+		// Show enemy health bar
+		TargetHealth.SetTargetHealth(hitbox.Enemy);
+		TargetHealth.Show();
+	}
+	
+	private void OnEnemyHoverRemoved(HitboxComponent hitbox)
+	{
+		// Hide enemy health bar
+		TargetHealth.Hide();
 	}
 	
 	private void OnTerrainClicked(Vector2 position)
 	{
 		_isAttacking = false;
-		_targetEnemy = null;
+		TargetEnemy = null;
 		_movementPosition = position;
 	}
 
 	private void HandleAttack()
 	{
-		if (_targetEnemy.IsDead())
+		if (TargetEnemy.IsDead())
 		{
 			return;
 		}
 		
-		Vector2 attackPosition = _targetEnemy?.Position ?? GetGlobalMousePosition();
+		Vector2 attackPosition = TargetEnemy?.Position ?? GetGlobalMousePosition();
 
 		var attackDirectionVector = attackPosition - Position;
 		var attackAngle = Mathf.Atan2(attackDirectionVector.Y, attackDirectionVector.X);
@@ -164,9 +180,10 @@ public partial class Player : CharacterBody2D
 		{
 			_isAttacking = false;
 
-			if (!_targetEnemy.IsDead())
+			if (!TargetEnemy.IsDead())
 			{
-				_attackComponent.Attack(_targetEnemy.HealthComponent);
+				_attackComponent.Attack(TargetEnemy.HealthComponent);
+				TargetHealth.SetTargetHealth(TargetEnemy);
 			}
 			
 			_currentAnimation = "idle_" + _lastDirection;
