@@ -25,12 +25,13 @@ public partial class Player : CharacterBody2D
 
 	public override void _Ready()
 	{
-		AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_attackComponent = GetNode<AttackComponent>("AttackComponent");
 		_movementPosition = Position;
+
+		
+		AnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		AnimatedSprite.Connect("animation_finished", Callable.From(OnAnimationFinished));
 
-		// Get the EnemyManager and connect to the EnemySpawned signal
 		var enemyManager = GetNode<EnemyManager>("/root/Game/EnemyManager");
 		enemyManager.Connect(EnemyManager.SignalName.EnemySpawned, new Callable(this, nameof(OnEnemySpawned)));
 
@@ -51,12 +52,10 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (Input.IsActionJustPressed("right_click"))
+		if (!_isAttacking && (Input.IsActionPressed("left_click") || Input.IsActionJustPressed("left_click")))
 		{
-			HandleAttack();
-		}
-		
-		if (TargetEnemy is not null && _isAttacking)
+			_movementPosition = GetGlobalMousePosition();
+		} else if (TargetEnemy is not null && _isAttacking)
 		{
 			var enemyPosition = TargetEnemy.Position;
 			var distance = Position.DistanceTo(enemyPosition);
@@ -176,10 +175,8 @@ public partial class Player : CharacterBody2D
 
 	private void OnAnimationFinished()
 	{
-		if (_isAttacking)
+		if (_isAttacking && Input.IsActionPressed("left_click"))
 		{
-			_isAttacking = false;
-
 			if (!TargetEnemy.IsDead())
 			{
 				_attackComponent.Attack(TargetEnemy.HealthComponent);
@@ -189,6 +186,9 @@ public partial class Player : CharacterBody2D
 			_currentAnimation = "idle_" + _lastDirection;
 			_currentAnimationType = PlayerAnimationType.Idle;
 			AnimatedSprite.Play(_currentAnimation);
+		} else if (_isAttacking)
+		{
+			_isAttacking = false;
 		}
 	}
 
