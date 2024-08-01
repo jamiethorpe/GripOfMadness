@@ -8,6 +8,8 @@ public partial class HitboxComponent : Area2D
     public delegate void EnemyClickedEventHandler(HitboxComponent hitbox);
     [Signal]
     public delegate void EnemyHoveredEventHandler(HitboxComponent hitbox);
+    [Signal]
+    public delegate void EnemyHoverRemovedEventHandler(HitboxComponent hitbox);
 
     public Enemy Enemy;
 
@@ -36,7 +38,11 @@ public partial class HitboxComponent : Area2D
     
     public void _on_mouse_entered()
     {
-        GD.Print("hovered!");
         EmitSignal(nameof(EnemyHovered), this);
+    }
+    
+    public void _on_mouse_exited()
+    {
+        EmitSignal(nameof(EnemyHoverRemoved), this);
     }
 }

@@ -89,6 +89,7 @@ public partial class Player : CharacterBody2D
 		var hitbox = enemy.GetNode<HitboxComponent>("HitboxComponent");
 		hitbox.Connect(HitboxComponent.SignalName.EnemyClicked, new Callable(this, nameof(OnEnemyClicked)));
 		hitbox.Connect(HitboxComponent.SignalName.EnemyHovered, new Callable(this, nameof(OnEnemyHovered)));
+		hitbox.Connect(HitboxComponent.SignalName.EnemyHoverRemoved, new Callable(this, nameof(OnEnemyHoverRemoved)));
 	}
 
 	private void OnEnemyExited(Enemy enemy)
@@ -109,6 +110,12 @@ public partial class Player : CharacterBody2D
 		// Show enemy health bar
 		TargetHealth.SetTargetHealth(hitbox.Enemy);
 		TargetHealth.Show();
+	}
+	
+	private void OnEnemyHoverRemoved(HitboxComponent hitbox)
+	{
+		// Hide enemy health bar
+		TargetHealth.Hide();
 	}
 	
 	private void OnTerrainClicked(Vector2 position)

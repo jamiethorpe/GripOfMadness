@@ -554,6 +554,7 @@ script = ExtResource("9_t8hen")
 _targetHealth = NodePath("../UI/TargetHealth")
 
 [node name="Skeleton" parent="EnemyManager" instance=ExtResource("11_7b7ab")]
+position = Vector2(393, -250)
 
 [node name="Player" parent="." node_paths=PackedStringArray("TargetHealth") instance=ExtResource("2_dxfcn")]
 position = Vector2(-134, -34)
