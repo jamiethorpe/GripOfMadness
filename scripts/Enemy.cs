@@ -9,10 +9,11 @@ public partial class Enemy : CharacterBody2D, IKillable
     // When inactive, the enemy will not move or attack
     private bool _isActive;
     private string _lastDirection = Directions.South; // Default direction
-    private bool _isDead = false;
+    private bool _isDead;
     
     private AnimatedSprite2D _animatedSprite;
     private string _currentAnimation = Animations.IdleSouth;
+    private TargetHealth _targetHealth;
 
     [Export] public string DisplayName = "Default Enemy";
     [Export] public HealthComponent HealthComponent;
@@ -41,6 +42,7 @@ public partial class Enemy : CharacterBody2D, IKillable
         HitboxComponent.QueueFree();
         HealthComponent.QueueFree();
         GetNode<CollisionShape2D>("CollisionShape2D").QueueFree();
+        GetNode<TargetHealth>("/root/Game/UI/TargetHealth").Hide();
 
 
         // TODO: replace it with a "Corpse" scene using the same position and the final "death" frame from the animation
