@@ -109,6 +109,7 @@ position = Vector2(0, 19)
 shape = SubResource("CapsuleShape2D_xtfav")
 
 [node name="HitboxComponent" parent="." groups=["enemies"] instance=ExtResource("5_f4hoj")]
+position = Vector2(1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 position = Vector2(-0.5, 5)

@@ -13,12 +13,10 @@ public partial class AgroArea : Area2D
 
     public void OnAgroAreaEntered(Area2D area)
     {
-        GD.Print("Entered Agro Area" + area.Name);
         if (!area.IsInGroup(Groups.Enemies))
             return;
 
         var enemy = area.GetParent<Enemy>();
-        GD.Print("Found " + enemy.Name);
         enemy.Activate();
     }
 }

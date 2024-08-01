@@ -87,8 +87,8 @@ public partial class Player : CharacterBody2D
 	private void OnEnemySpawned(Enemy enemy)
 	{
 		var hitbox = enemy.GetNode<HitboxComponent>("HitboxComponent");
-		GD.Print("registering hitbox " + hitbox.Name);
 		hitbox.Connect(HitboxComponent.SignalName.EnemyClicked, new Callable(this, nameof(OnEnemyClicked)));
+		hitbox.Connect(HitboxComponent.SignalName.EnemyHovered, new Callable(this, nameof(OnEnemyHovered)));
 	}
 
 	private void OnEnemyExited(Enemy enemy)
@@ -102,7 +102,13 @@ public partial class Player : CharacterBody2D
 	{
 		_isAttacking = true;
 		TargetEnemy = hitbox.Enemy;
-		GD.Print(TargetEnemy.DisplayName);
+	}
+	
+	private void OnEnemyHovered(HitboxComponent hitbox)
+	{
+		// Show enemy health bar
+		TargetHealth.SetTargetHealth(hitbox.Enemy);
+		TargetHealth.Show();
 	}
 	
 	private void OnTerrainClicked(Vector2 position)

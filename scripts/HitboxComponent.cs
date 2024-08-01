@@ -6,6 +6,8 @@ public partial class HitboxComponent : Area2D
 {
     [Signal]
     public delegate void EnemyClickedEventHandler(HitboxComponent hitbox);
+    [Signal]
+    public delegate void EnemyHoveredEventHandler(HitboxComponent hitbox);
 
     public Enemy Enemy;
 
@@ -28,8 +30,13 @@ public partial class HitboxComponent : Area2D
     {
         if (@event is InputEventMouseButton mouseButton && mouseButton.Pressed && IsAttackable)
         {
-            GD.Print("Clicked me!");
             EmitSignal(nameof(EnemyClicked), this);
         }
+    }
+    
+    public void _on_mouse_entered()
+    {
+        GD.Print("hovered!");
+        EmitSignal(nameof(EnemyHovered), this);
     }
 }

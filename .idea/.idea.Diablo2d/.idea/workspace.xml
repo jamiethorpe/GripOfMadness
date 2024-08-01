@@ -6,12 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="07cc04bb-16ad-4df5-b18e-cabca0d0aa5e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/enemy.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/enemy.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/project.godot" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/game.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/game.tscn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/player.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/player.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/hitbox_collision_shape_2D.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/hitbox_collision_shape_2D.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/skeleton.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/skeleton.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/AgroArea.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/AgroArea.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Enemy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/EnemyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/EnemyManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/HitboxComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/HitboxComponent.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/TargetHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/TargetHealth.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
