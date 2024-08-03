@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Godot;
 
 namespace Diablo2d.Utils;
 
@@ -31,5 +32,22 @@ public static class Directions
         var random = new Random();
         var index = random.Next(AllDirections.Count);
         return AllDirections[index];
+    }
+
+    public static string GetCardinalDirection(float angle)
+    {
+        string direction = angle switch
+        {
+            < Mathf.Pi / 8 and >= -Mathf.Pi / 8 => East,
+            >= Mathf.Pi / 8 and < 3 * Mathf.Pi / 8 => SouthEast,
+            < 5 * Mathf.Pi / 8 and >= 3 * Mathf.Pi / 8 => South,
+            < 7 * Mathf.Pi / 8 and >= 5 * Mathf.Pi / 8 => SouthWest,
+            < -Mathf.Pi / 8 and >= -3 * Mathf.Pi / 8 => NorthEast,
+            < -3 * Mathf.Pi / 8 and >= -5 * Mathf.Pi / 8 => North,
+            < -5 * Mathf.Pi / 8 and >= -7 * Mathf.Pi / 8 => NorthWest,
+            _ => West
+        };
+
+        return direction;
     }
 }

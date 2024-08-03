@@ -550,15 +550,27 @@ script = ExtResource("9_t8hen")
 
 [node name="UI" parent="." instance=ExtResource("10_566fa")]
 
-[node name="EnemyManager" parent="." node_paths=PackedStringArray("_targetHealth") instance=ExtResource("10_rm5ho")]
-_targetHealth = NodePath("../UI/TargetHealth")
+[node name="Name" parent="UI/EnemyDetails" index="1"]
+offset_left = 344.0
+offset_top = 47.0
+offset_right = 744.0
+offset_bottom = 87.0
+scroll_active = false
+
+[node name="EnemyManager" parent="." instance=ExtResource("10_rm5ho")]
 
 [node name="Skeleton" parent="EnemyManager" instance=ExtResource("11_7b7ab")]
 position = Vector2(393, -250)
 
-[node name="Player" parent="." node_paths=PackedStringArray("TargetHealth") instance=ExtResource("2_dxfcn")]
+[node name="Skeleton2" parent="EnemyManager" instance=ExtResource("11_7b7ab")]
+position = Vector2(469, -155)
+
+[node name="Skeleton3" parent="EnemyManager" instance=ExtResource("11_7b7ab")]
+position = Vector2(571, -235)
+
+[node name="Player" parent="." node_paths=PackedStringArray("EnemyDetails") instance=ExtResource("2_dxfcn")]
 position = Vector2(-134, -34)
-TargetHealth = NodePath("../UI/TargetHealth")
+EnemyDetails = NodePath("../UI/EnemyDetails")
 
 [node name="AttackComponent" parent="Player" index="2"]
 AttackDamage = 10
@@ -581,4 +593,6 @@ shape = SubResource("CapsuleShape2D_2k2wr")
 
 [editable path="UI"]
 [editable path="EnemyManager/Skeleton"]
+[editable path="EnemyManager/Skeleton2"]
+[editable path="EnemyManager/Skeleton3"]
 [editable path="Player"]

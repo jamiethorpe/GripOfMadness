@@ -1,17 +1,110 @@
-[gd_scene load_steps=3 format=3 uid="uid://18njuhshadl2"]
+[gd_scene load_steps=8 format=3 uid="uid://18njuhshadl2"]
 
-[ext_resource type="Script" path="res://scripts/TargetHealth.cs" id="1_q703b"]
+[ext_resource type="Script" path="res://scripts/EnemyDetails.cs" id="1_bgfl3"]
+[ext_resource type="Script" path="res://scripts/HealthBar.cs" id="1_q703b"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bemcu"]
-blend_mode = 4
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2e1pr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5fcd1"]
+
+[sub_resource type="FontFile" id="FontFile_oi3m6"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/20/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/30/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/26/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/24/0 = Vector2(0, 0)
+cache/0/20/0/ascent = 0.0
+cache/0/20/0/descent = 0.0
+cache/0/20/0/underline_position = 0.0
+cache/0/20/0/underline_thickness = 0.0
+cache/0/20/0/scale = 1.0
+cache/0/20/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/20/0/kerning_overrides/20/0 = Vector2(0, 0)
+cache/0/20/0/kerning_overrides/30/0 = Vector2(0, 0)
+cache/0/20/0/kerning_overrides/26/0 = Vector2(0, 0)
+cache/0/20/0/kerning_overrides/24/0 = Vector2(0, 0)
+cache/0/30/0/ascent = 0.0
+cache/0/30/0/descent = 0.0
+cache/0/30/0/underline_position = 0.0
+cache/0/30/0/underline_thickness = 0.0
+cache/0/30/0/scale = 1.0
+cache/0/30/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/30/0/kerning_overrides/20/0 = Vector2(0, 0)
+cache/0/30/0/kerning_overrides/30/0 = Vector2(0, 0)
+cache/0/30/0/kerning_overrides/26/0 = Vector2(0, 0)
+cache/0/30/0/kerning_overrides/24/0 = Vector2(0, 0)
+cache/0/26/0/ascent = 0.0
+cache/0/26/0/descent = 0.0
+cache/0/26/0/underline_position = 0.0
+cache/0/26/0/underline_thickness = 0.0
+cache/0/26/0/scale = 1.0
+cache/0/26/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/26/0/kerning_overrides/20/0 = Vector2(0, 0)
+cache/0/26/0/kerning_overrides/30/0 = Vector2(0, 0)
+cache/0/26/0/kerning_overrides/26/0 = Vector2(0, 0)
+cache/0/26/0/kerning_overrides/24/0 = Vector2(0, 0)
+cache/0/24/0/ascent = 0.0
+cache/0/24/0/descent = 0.0
+cache/0/24/0/underline_position = 0.0
+cache/0/24/0/underline_thickness = 0.0
+cache/0/24/0/scale = 1.0
+cache/0/24/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/24/0/kerning_overrides/20/0 = Vector2(0, 0)
+cache/0/24/0/kerning_overrides/30/0 = Vector2(0, 0)
+cache/0/24/0/kerning_overrides/26/0 = Vector2(0, 0)
+cache/0/24/0/kerning_overrides/24/0 = Vector2(0, 0)
+
+[sub_resource type="Theme" id="Theme_dumt7"]
+default_font = SubResource("FontFile_oi3m6")
+Label/colors/font_color = Color(0.9, 0.9, 0.9, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(0.423651, 0.423651, 0.423651, 0)
+Label/constants/line_spacing = 3
+Label/constants/outline_size = 1
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 1
+Label/font_sizes/font_size = 24
+Label/styles/normal = SubResource("StyleBoxEmpty_5fcd1")
+
+[sub_resource type="LabelSettings" id="LabelSettings_p21j8"]
+font_size = 24
+font_color = Color(0.886262, 0.886261, 0.886262, 1)
+shadow_size = 6
+shadow_color = Color(0.0142752, 0.0142752, 0.0142752, 0)
+shadow_offset = Vector2(3, 3)
 
 [node name="UI" type="CanvasLayer"]
 
-[node name="TargetHealth" type="ProgressBar" parent="."]
+[node name="EnemyDetails" type="Node2D" parent="." node_paths=PackedStringArray("_healthBar", "_name")]
+script = ExtResource("1_bgfl3")
+_healthBar = NodePath("HealthBar")
+_name = NodePath("Name")
+
+[node name="Name" type="Label" parent="EnemyDetails"]
+z_index = 2
+material = SubResource("ShaderMaterial_2e1pr")
+offset_left = 343.0
+offset_top = 47.0
+offset_right = 744.0
+offset_bottom = 87.0
+size_flags_vertical = 3
+theme = SubResource("Theme_dumt7")
+text = "skeleton"
+label_settings = SubResource("LabelSettings_p21j8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="EnemyDetails"]
 modulate = Color(1, 0, 0, 1)
 self_modulate = Color(1, 0, 0, 1)
 top_level = true
-material = SubResource("CanvasItemMaterial_bemcu")
+z_index = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -23,11 +116,3 @@ grow_horizontal = 2
 value = 100.0
 show_percentage = false
 script = ExtResource("1_q703b")
-
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -104.0
-offset_top = -424.0
-offset_right = -64.0
-offset_bottom = -384.0

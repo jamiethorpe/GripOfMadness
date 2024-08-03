@@ -88,7 +88,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xtfav"]
-height = 56.0
+radius = 7.49063
+height = 24.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1masc"]
 size = Vector2(39, 84)
@@ -105,7 +106,8 @@ sprite_frames = SubResource("SpriteFrames_5ptx5")
 animation = &"die_north"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 19)
+position = Vector2(0, 33)
+scale = Vector2(1.335, 0.779096)
 shape = SubResource("CapsuleShape2D_xtfav")
 
 [node name="HitboxComponent" parent="." groups=["enemies"] instance=ExtResource("5_f4hoj")]

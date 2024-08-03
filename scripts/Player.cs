@@ -20,7 +20,7 @@ public partial class Player : CharacterBody2D
 	
 	public Enemy TargetEnemy;
 	
-	[Export] public TargetHealth TargetHealth;
+	[Export] public EnemyDetails EnemyDetails;
 	
 
 	public override void _Ready()
@@ -106,15 +106,12 @@ public partial class Player : CharacterBody2D
 	
 	private void OnEnemyHovered(HitboxComponent hitbox)
 	{
-		// Show enemy health bar
-		TargetHealth.SetTargetHealth(hitbox.Enemy);
-		TargetHealth.Show();
+		EnemyDetails.Show(hitbox.Enemy);
 	}
 	
 	private void OnEnemyHoverRemoved(HitboxComponent hitbox)
 	{
-		// Hide enemy health bar
-		TargetHealth.Hide();
+		EnemyDetails.Hide();
 	}
 	
 	private void OnTerrainClicked(Vector2 position)
@@ -135,7 +132,7 @@ public partial class Player : CharacterBody2D
 
 		var attackDirectionVector = attackPosition - Position;
 		var attackAngle = Mathf.Atan2(attackDirectionVector.Y, attackDirectionVector.X);
-		var attackDirection = GetDirection(attackAngle);
+		var attackDirection = Directions.GetCardinalDirection(attackAngle);
 		_lastDirection = attackDirection;
 		var animationToPlay = "one_hand_overhead_attack_" + attackDirection;
 		_currentAnimation = animationToPlay;
@@ -154,7 +151,7 @@ public partial class Player : CharacterBody2D
 		{
 			var targetPosition = directionVector.Normalized();
 			Velocity = targetPosition * _speed;
-			var direction = GetDirection(angle);
+			var direction = Directions.GetCardinalDirection(angle);
 			_lastDirection = direction;
 			var animationToPlay = "run_" + direction;
 			if (_currentAnimation != animationToPlay)
@@ -180,7 +177,7 @@ public partial class Player : CharacterBody2D
 			if (!TargetEnemy.IsDead())
 			{
 				_attackComponent.Attack(TargetEnemy.HealthComponent);
-				TargetHealth.SetTargetHealth(TargetEnemy);
+				EnemyDetails.UpdateHealth(TargetEnemy);
 			}
 			
 			_currentAnimation = "idle_" + _lastDirection;
@@ -190,24 +187,5 @@ public partial class Player : CharacterBody2D
 		{
 			_isAttacking = false;
 		}
-	}
-
-	private string GetDirection(float angle)
-	{
-		if (angle >= -Mathf.Pi / 8 && angle < Mathf.Pi / 8)
-			return "east";
-		if (angle >= Mathf.Pi / 8 && angle < 3 * Mathf.Pi / 8)
-			return "south_east";
-		if (angle >= 3 * Mathf.Pi / 8 && angle < 5 * Mathf.Pi / 8)
-			return "south";
-		if (angle >= 5 * Mathf.Pi / 8 && angle < 7 * Mathf.Pi / 8)
-			return "south_west";
-		if (angle >= -3 * Mathf.Pi / 8 && angle < -Mathf.Pi / 8)
-			return "north_east";
-		if (angle >= -5 * Mathf.Pi / 8 && angle < -3 * Mathf.Pi / 8)
-			return "north";
-		if (angle >= -7 * Mathf.Pi / 8 && angle < -5 * Mathf.Pi / 8)
-			return "north_west";
-		return "west";
 	}
 }

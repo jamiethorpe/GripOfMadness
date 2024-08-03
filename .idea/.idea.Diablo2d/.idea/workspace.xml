@@ -6,7 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="07cc04bb-16ad-4df5-b18e-cabca0d0aa5e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/game.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/game.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/skeleton.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/skeleton.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/ui.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/ui.tscn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Enemy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/EnemyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/EnemyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/TargetHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/HealthBar.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/Directions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Directions.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +25,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9fd3b083f28f40c0827cc635e2e56ca7459200/04/fc0d5108/Node.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9fd3b083f28f40c0827cc635e2e56ca7459200/2d/aa985d46/Mathf.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9fd3b083f28f40c0827cc635e2e56ca7459200/cd/ccb3861f/InputEventMouseButton.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9fd3b083f28f40c0827cc635e2e56ca7459200/f3/1cf7b567/InputEvent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Diablo2d/scripts/Enemy.cs" root0="SKIP_HIGHLIGHTING" />

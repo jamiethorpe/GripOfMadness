@@ -3,15 +3,9 @@ using System;
 
 namespace Diablo2d.scripts;
 
-public partial class TargetHealth : ProgressBar
+public partial class HealthBar : ProgressBar
 {
-	public override void _Ready()
-	{
-		// The health bar should be hidden by default
-		Hide();
-	}
-
-	public void SetTargetHealth(Enemy enemy)
+	public void SetValue(Enemy enemy)
 	{
 		if (enemy == null)
 		{

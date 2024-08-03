@@ -13,7 +13,7 @@ public partial class Enemy : CharacterBody2D, IKillable
     
     private AnimatedSprite2D _animatedSprite;
     private string _currentAnimation = Animations.IdleSouth;
-    private TargetHealth _targetHealth;
+    private HealthBar _healthBar;
 
     [Export] public string DisplayName = "Default Enemy";
     [Export] public HealthComponent HealthComponent;
@@ -42,7 +42,7 @@ public partial class Enemy : CharacterBody2D, IKillable
         HitboxComponent.QueueFree();
         HealthComponent.QueueFree();
         GetNode<CollisionShape2D>("CollisionShape2D").QueueFree();
-        GetNode<TargetHealth>("/root/Game/UI/TargetHealth").Hide();
+        GetNode<EnemyDetails>("/root/Game/UI/EnemyDetails").Hide();
 
 
         // TODO: replace it with a "Corpse" scene using the same position and the final "death" frame from the animation
