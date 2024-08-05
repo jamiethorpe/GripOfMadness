@@ -18,6 +18,9 @@ public partial class Enemy : CharacterBody2D, IKillable
     [Export] public string DisplayName = "Default Enemy";
     [Export] public HealthComponent HealthComponent;
     public HitboxComponent HitboxComponent;
+    
+    [Signal]
+    public delegate void EnemyDiedEventHandler(Enemy enemy);
 
     public override void _Ready()
     {

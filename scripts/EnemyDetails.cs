@@ -16,7 +16,7 @@ public partial class EnemyDetails : Node2D
 
 	public void Show(Enemy enemy)
 	{
-		_name.Text = enemy.Name;
+		_name.Text = enemy.DisplayName;
 		_healthBar.SetValue(enemy);
 		Show();
 	}

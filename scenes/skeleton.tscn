@@ -95,6 +95,7 @@ height = 24.0
 size = Vector2(39, 84)
 
 [node name="Skeleton" type="CharacterBody2D" groups=["enemies"]]
+collision_mask = 3
 script = ExtResource("1_csj4e")
 DisplayName = "Skeleton"
 

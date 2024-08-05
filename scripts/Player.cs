@@ -15,16 +15,18 @@ public partial class Player : CharacterBody2D
 	private string _lastDirection = Directions.South; // Default direction
 	private Vector2 _movementPosition = Vector2.Zero;
 	private float _speed = 300.0f;
+	private  NavigationAgent2D _navigationAgent;
 	
 	[Export] public AnimatedSprite2D AnimatedSprite;
 	
 	public Enemy TargetEnemy;
 	
 	[Export] public EnemyDetails EnemyDetails;
-	
 
 	public override void _Ready()
 	{
+		_navigationAgent = GetNode<NavigationAgent2D>("NavigationAgent2D");
+		
 		_attackComponent = GetNode<AttackComponent>("AttackComponent");
 		_movementPosition = Position;
 
@@ -43,22 +45,19 @@ public partial class Player : CharacterBody2D
 				return;
 			}
 			
+			
 			OnEnemySpawned(enemy);
 		}
-		
-		var terrain = GetNode<Terrain>("/root/Game/Terrain");
-		terrain.Connect(Terrain.SignalName.TerrainClicked, new Callable(this, nameof(OnTerrainClicked)));
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		if (!_isAttacking && (Input.IsActionPressed("left_click") || Input.IsActionJustPressed("left_click")))
-		{
+		{ 
 			_movementPosition = GetGlobalMousePosition();
 		} else if (TargetEnemy is not null && _isAttacking)
 		{
-			var enemyPosition = TargetEnemy.Position;
-			var distance = Position.DistanceTo(enemyPosition);
+			var distance = Position.DistanceTo(TargetEnemy.Position);
 
 			if (distance > _attackComponent.Range)
 			{
@@ -85,18 +84,25 @@ public partial class Player : CharacterBody2D
 
 	private void OnEnemySpawned(Enemy enemy)
 	{
+		enemy.Connect(Enemy.SignalName.EnemyDied, new Callable(this, nameof(OnEnemyDied)));
 		var hitbox = enemy.GetNode<HitboxComponent>("HitboxComponent");
 		hitbox.Connect(HitboxComponent.SignalName.EnemyClicked, new Callable(this, nameof(OnEnemyClicked)));
 		hitbox.Connect(HitboxComponent.SignalName.EnemyHovered, new Callable(this, nameof(OnEnemyHovered)));
 		hitbox.Connect(HitboxComponent.SignalName.EnemyHoverRemoved, new Callable(this, nameof(OnEnemyHoverRemoved)));
 	}
 
-	private void OnEnemyExited(Enemy enemy)
+	private void OnEnemyDied(Enemy enemy)
 	{
-		// Explicitly disconnect signals if needed (usually not necessary since QueueFree handles it)
-		enemy.GetNode<HitboxComponent>("HitboxComponent")
-			.Disconnect(HitboxComponent.SignalName.EnemyClicked, new Callable(this, nameof(OnEnemyClicked)));
+		_isAttacking = false;
+		TargetEnemy = null;
 	}
+
+	// private void OnEnemyExited(Enemy enemy)
+	// {
+	// 	// Explicitly disconnect signals if needed (usually not necessary since QueueFree handles it)
+	// 	enemy.GetNode<HitboxComponent>("HitboxComponent")
+	// 		.Disconnect(HitboxComponent.SignalName.EnemyClicked, new Callable(this, nameof(OnEnemyClicked)));
+	// }
 
 	private void OnEnemyClicked(HitboxComponent hitbox)
 	{
@@ -112,13 +118,6 @@ public partial class Player : CharacterBody2D
 	private void OnEnemyHoverRemoved(HitboxComponent hitbox)
 	{
 		EnemyDetails.Hide();
-	}
-	
-	private void OnTerrainClicked(Vector2 position)
-	{
-		_isAttacking = false;
-		TargetEnemy = null;
-		_movementPosition = position;
 	}
 
 	private void HandleAttack()
@@ -144,16 +143,15 @@ public partial class Player : CharacterBody2D
 
 	private void Move()
 	{
-		var directionVector = _movementPosition - Position;
-		var angle = Mathf.Atan2(directionVector.Y, directionVector.X);
-		
 		if (Position.DistanceSquaredTo(_movementPosition) > 10)
 		{
-			var targetPosition = directionVector.Normalized();
-			Velocity = targetPosition * _speed;
-			var direction = Directions.GetCardinalDirection(angle);
-			_lastDirection = direction;
-			var animationToPlay = "run_" + direction;
+			_navigationAgent.TargetPosition = _movementPosition;
+			var directionVector = _navigationAgent.GetNextPathPosition() - Position;
+			var angle = Mathf.Atan2(directionVector.Y, directionVector.X);
+			Velocity = directionVector.Normalized() * _speed;
+			var cardinalDirection = Directions.GetCardinalDirection(angle);
+			_lastDirection = cardinalDirection;
+			var animationToPlay = "run_" + cardinalDirection;
 			if (_currentAnimation != animationToPlay)
 			{
 				_currentAnimation = animationToPlay;
@@ -166,26 +164,29 @@ public partial class Player : CharacterBody2D
 		{
 			_currentAnimation = "idle_" + _lastDirection;
 			AnimatedSprite.Play(_currentAnimation);
-			Velocity = Vector2.Zero; // Ensure velocity is zero when idling
+			Velocity = Vector2.Zero;
 		}
 	}
 
 	private void OnAnimationFinished()
 	{
-		if (_isAttacking && Input.IsActionPressed("left_click"))
+		if (_isAttacking)
 		{
 			if (!TargetEnemy.IsDead())
 			{
 				_attackComponent.Attack(TargetEnemy.HealthComponent);
 				EnemyDetails.UpdateHealth(TargetEnemy);
 			}
+
+			if (!Input.IsActionPressed("left_click"))
+			{
+				_isAttacking = false;
+
+				_currentAnimation = "idle_" + _lastDirection;
+				_currentAnimationType = PlayerAnimationType.Idle;
+				AnimatedSprite.Play(_currentAnimation);
+			}
 			
-			_currentAnimation = "idle_" + _lastDirection;
-			_currentAnimationType = PlayerAnimationType.Idle;
-			AnimatedSprite.Play(_currentAnimation);
-		} else if (_isAttacking)
-		{
-			_isAttacking = false;
 		}
 	}
 }
