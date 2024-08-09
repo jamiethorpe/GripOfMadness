@@ -6,14 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="07cc04bb-16ad-4df5-b18e-cabca0d0aa5e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Diablo2d/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/game.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/game.tscn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/hitbox_collision_shape_2D.tscn" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/player.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/player.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/enemy.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/enemy.tscn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/skeleton.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/skeleton.tscn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Enemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/EnemyDetails.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/EnemyDetails.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/Terrain.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/HealthComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/HealthComponent.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

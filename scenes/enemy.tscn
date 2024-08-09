@@ -1,11 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://1od3b83xtvha"]
 
 [ext_resource type="Script" path="res://scripts/Enemy.cs" id="1_37aog"]
-[ext_resource type="PackedScene" uid="uid://bthgy4qglf7ap" path="res://scenes/health_component.tscn" id="3_aynvv"]
+[ext_resource type="Resource" uid="uid://obsi04qynx4v" path="res://resources/HealthComponent.tres" id="2_c18th"]
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_37aog")
-
-[node name="HealthComponent" parent="." instance=ExtResource("3_aynvv")]
+HealthComponent = ExtResource("2_c18th")

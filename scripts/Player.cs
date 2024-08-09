@@ -42,9 +42,8 @@ public partial class Player : CharacterBody2D
 		{
 			if (child is not Enemy enemy)
 			{
-				return;
+				continue;
 			}
-			
 			
 			OnEnemySpawned(enemy);
 		}
@@ -85,6 +84,7 @@ public partial class Player : CharacterBody2D
 	private void OnEnemySpawned(Enemy enemy)
 	{
 		enemy.Connect(Enemy.SignalName.EnemyDied, new Callable(this, nameof(OnEnemyDied)));
+		
 		var hitbox = enemy.GetNode<HitboxComponent>("HitboxComponent");
 		hitbox.Connect(HitboxComponent.SignalName.EnemyClicked, new Callable(this, nameof(OnEnemyClicked)));
 		hitbox.Connect(HitboxComponent.SignalName.EnemyHovered, new Callable(this, nameof(OnEnemyHovered)));

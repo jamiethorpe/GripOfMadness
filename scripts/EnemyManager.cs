@@ -21,7 +21,7 @@ public partial class EnemyManager : Node
         {
             if (child is not Enemy enemy)
             {
-                return;
+                continue;
             }
             
             _enemies.Add(enemy);

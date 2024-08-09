@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HealthComponent" load_steps=2 format=3 uid="uid://obsi04qynx4v"]
+
+[ext_resource type="Script" path="res://scripts/HealthComponent.cs" id="1_ffwi6"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_ffwi6")
+Health = 100
+MaxHealth = 100

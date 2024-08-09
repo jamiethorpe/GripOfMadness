@@ -2,16 +2,22 @@ using Godot;
 
 namespace Diablo2d.scripts;
 
-public partial class HealthComponent : Node2D, IAttackable
+[GlobalClass]
+public partial class HealthComponent : Resource, IAttackable
 {
-    public int Health;
-    [Export] public int MaxHealth;
+    [Export] public int Health { get; set; }
+    [Export] public int MaxHealth { get; set; }
     private IKillable _killable;
 
-    public override void _Ready()
+    public HealthComponent()
     {
+        Health = MaxHealth; 
+    }
+    
+    public void Initialize(IKillable killable)
+    {
+        _killable = killable;
         Health = MaxHealth;
-        _killable = GetParent<IKillable>();
     }
 
     public void Damage(AttackComponent attack)
